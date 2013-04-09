@@ -129,7 +129,9 @@ def load_user(uid):
 @oidapp.route("/foo")
 @login_required
 def foo():
-  return str(base(**request.environ.get('PAGE', {})))
+  page = request.environ.get('PAGE', {})
+  page['user'] = current_user
+  return str(base(**page))
 
 
 @oidapp.route("/in", methods=["GET", "POST"])

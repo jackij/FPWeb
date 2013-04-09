@@ -115,11 +115,11 @@ login_page = dict(
   )
 
 
-
-def main_dash(c, **extra):
+def main_dash(c, user, **extra):
+  html = c.root
+  title_h1 = html.find('h1')
+  title_h1.text = title_h1.text.replace('[User Name]', user.fullname)
   return
-
-
 
 
 main_page = dict(
