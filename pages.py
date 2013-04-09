@@ -12,11 +12,18 @@ that's the idea.)
 CDN = 'http://cdnjs.cloudflare.com/ajax/libs/'
 
 
-def body(body, title, page_title, form, **extra):
+def body(body, title, page_title, form, crumbs, **extra):
   '''
   A simple body renderer.
   '''
   body.h1(page_title)
+  with body.div as d:
+    d(class_='crumbs')
+    n = len(crumbs) - 1
+    for i, (name, URL) in enumerate(crumbs):
+      a = d.a(name, href=URL)
+      if i < n:
+        d += ' - '
   form(body, **extra)
 
 
@@ -31,6 +38,7 @@ datapost = dict(
   subtitle = 'Click here to...',
   body = body,
   form = dp_html,
+  crumbs = [],
   )
 
 
@@ -46,6 +54,11 @@ home_page = dict(
   subtitle = 'Human-Computer Neural Interface',
   body = body,
   form = home_html,
+  crumbs = [
+    ('neuropost', '/'),
+    ('login','/log/in' ),
+    ('logout','/log/out' ),
+    ],
   )
 
 
@@ -62,6 +75,10 @@ logout_page = dict(
   body = body,
   form = logout_form,
   own_URL = '/log/out',
+  crumbs = [
+    ('neuropost', '/'),
+    ('logout','/log/out' ),
+    ],
 )
 
 
@@ -91,6 +108,10 @@ login_page = dict(
   body = body,
   form = login_form,
   own_URL = '/log/in',
+  crumbs = [
+    ('neuropost', '/'),
+    ('login','/log/in' ),
+    ],
   )
 
 
