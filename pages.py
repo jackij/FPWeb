@@ -116,6 +116,27 @@ login_page = dict(
 
 
 
+def main_dash(c, **extra):
+  return
+
+
+
+
+main_page = dict(
+  title = 'Gazzian Main',
+  page_title = 'Hi [User Name]',
+  body = body,
+  form = main_dash,
+  own_URL = '/m/foo',
+  crumbs = [
+    ('neuropost', '/'),
+    ('Your Profile','/m/foo' ),
+    ('logout','/log/out' ),
+    ],
+  )
+
+
+
 
 
 

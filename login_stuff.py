@@ -15,7 +15,7 @@ OPENID_STORE = '/tmp/oid.store'
 
 
 dbapp = Flask(__name__)
-dbapp.secret_key = "I'm a fucking secret!"
+dbapp.secret_key = "I'm a secret!"
 dbapp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 
 
@@ -129,14 +129,7 @@ def load_user(uid):
 @oidapp.route("/foo")
 @login_required
 def foo():
-  return 'Hey there'
-
-
-def require_login(view_function):
-  def vf(*a, **b):
-    with oidapp.app_context():
-      return login_required(view_function)(*a, **b)
-  return vf
+  return str(base(**request.environ.get('PAGE', {})))
 
 
 @oidapp.route("/in", methods=["GET", "POST"])
