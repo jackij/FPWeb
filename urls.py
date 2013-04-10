@@ -11,6 +11,12 @@ from site_css import site_default
 from login_stuff import oidapp, db, RecordsYo
 
 
+studyID_to_record_class = {
+  'dat': RecordsYo,
+  'meditrain': RecordsYo,
+  }
+
+
 SITE_CSS_URL = '/static/site.css'
 
 
@@ -19,8 +25,9 @@ for page in (home_page, login_page, logout_page, main_page):
 
 
 def process_batch(data):
+  record_class = studyID_to_record_class[data['studyID'].lower()]
   for record in data['data']:
-    record = RecordsYo(**record)
+    record = record_class(**record)
     db.session.add(record)
   db.session.commit()
   return repr(data)
@@ -41,4 +48,3 @@ def logins(app):
 
 
 everything = [urls, logins]
-
