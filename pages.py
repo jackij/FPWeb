@@ -124,7 +124,7 @@ def main_dash(c, user, db, record_classes, **extra):
   with c.table(border='1') as t:
     for rc in record_classes:
       with t.tr as row:
-        row.td(rc.study_ID)
+        row.td.a(rc.study_ID, href='#')
         row.td('Total Records ' + str(rc.query.count()))
 
 
