@@ -115,11 +115,17 @@ login_page = dict(
   )
 
 
-def main_dash(c, user, **extra):
+def main_dash(c, user, db, record_classes, **extra):
   html = c.root
   title_h1 = html.find('h1')
   title_h1.text = title_h1.text.replace('[User Name]', user.fullname)
-  return
+
+  c.h3("Studies")
+  with c.table(border='1') as t:
+    for rc in record_classes:
+      with t.tr as row:
+        row.td(rc.study_ID)
+        row.td('Total Records ' + str(rc.query.count()))
 
 
 main_page = dict(

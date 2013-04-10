@@ -57,6 +57,8 @@ class User(db.Model):
 
 class RecordsYo(db.Model):
 
+  study_ID = 'DAT' # I think, maybe 'meditrain'.
+
   __tablename__ = 'rec'
 
   id = db.Column(db.Integer, primary_key=True)
@@ -131,6 +133,10 @@ def load_user(uid):
 def foo():
   page = request.environ.get('PAGE', {})
   page['user'] = current_user
+  page['db'] = db
+  page['record_classes'] = [
+    RecordsYo,
+    ]
   return str(base(**page))
 
 
