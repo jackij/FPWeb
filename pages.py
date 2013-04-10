@@ -134,7 +134,7 @@ def main_dash(c, user, db, record_classes, **extra):
 
   tbale(
     c.div,
-    "Studies",
+    "Sessions",
     ('Study Session', 'received on'),
     record_classes,
     r,
