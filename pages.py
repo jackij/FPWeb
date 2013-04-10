@@ -132,6 +132,14 @@ def main_dash(c, user, db, record_classes, **extra):
     r,
     )
 
+  tbale(
+    c.div,
+    "Studies",
+    ('Study Session', 'received on'),
+    record_classes,
+    r,
+    )
+
 
 def tbale(c, title, heads, rows, row_maker, **extra):
   c.h3(title)
