@@ -120,12 +120,28 @@ def main_dash(c, user, db, record_classes, **extra):
   title_h1 = html.find('h1')
   title_h1.text = title_h1.text.replace('[User Name]', user.fullname)
 
-  c.h3("Studies")
+  def r(row, rc, **extra):
+    row.td.a(rc.study_ID, href='#')
+    row.td(str(rc.query.count()))
+
+  tbale(
+    c.div,
+    "Studies",
+    ('Study', 'Total Records'),
+    record_classes,
+    r,
+    )
+
+
+def tbale(c, title, heads, rows, row_maker, **extra):
+  c.h3(title)
   with c.table(border='1') as t:
-    for rc in record_classes:
+    with t.thead.tr as head:
+      for h in heads:
+        head.th(h)
+    for row_data in rows:
       with t.tr as row:
-        row.td.a(rc.study_ID, href='#')
-        row.td('Total Records ' + str(rc.query.count()))
+        row_maker(row, row_data, **extra)
 
 
 main_page = dict(
