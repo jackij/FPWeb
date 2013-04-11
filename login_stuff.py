@@ -9,7 +9,7 @@ from flask.ext.login import (
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.openid import OpenID
 from templates import base
-from database import db, User, RecordsYo
+from database import db, User
 
 
 OPENID_STORE = '/tmp/oid.store'
@@ -49,7 +49,7 @@ def foo():
   page['user'] = current_user
   page['db'] = db
   page['record_classes'] = [
-    RecordsYo,
+    RecordsDat,
     ]
   return str(base(**page))
 

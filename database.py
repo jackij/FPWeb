@@ -88,3 +88,79 @@ class RecordsYo(db.Model):
     self.targetOnScreenTime = targetOnScreenTime
     self.timeBetweenCueAndTarget = timeBetweenCueAndTarget
     self.timeStamp = timeStamp
+
+
+class RecordsMediTrain(db.Model):
+
+  study_ID = 'meditrain'
+
+  __tablename__ = 'rec'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  date = db.Column(db.DateTime())
+  response = db.Column(db.Integer())
+  sessionCount = db.Column(db.Integer())
+  trialCount = db.Column(db.Integer())
+  duration = db.Column(db.Integer())
+
+  def __init__(self,
+    date=-1.0,
+    response=-1.0,
+    sessionCount=-1.0,
+    trialCount=-1.0,
+    duration=-1.0,
+    ):
+    self.date = date
+    self.response = response
+    self.sessionCount = sessionCount
+    self.trialCount = trialCount
+    self.duration = duration
+
+
+# Trial,Session Id,Category Id,Block Id,Trial,Exemplars,Morph Level,Morph Stimulus,RT,Response,Accuracy
+
+class RecordsTrainCat(db.Model):
+
+  study_ID = 'traincat'
+
+  __tablename__ = 'rec'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  index = db.Column(db.Integer())
+  sessionID = db.Column(db.Integer())
+  categoryID = db.Column(db.Integer())
+  blockID = db.Column(db.Integer())
+  trial = db.Column(db.Integer())
+  exemplars = db.Column(db.String()) # What is this and why are we saving it like this?
+  morphLevel = db.Column(db.Integer())
+  morphStimulus = db.Column(db.String())
+  RT = db.Column(db.Float())
+  response = db.Column(db.String())
+  accuracy = db.Column(db.String())
+
+  def __init__(self,
+    index = -1.0,
+    sessionID = -1.0,
+    categoryID = -1.0,
+    blockID = -1.0,
+    trial = -1.0,
+    exemplars = -1.0,
+    morphLevel = -1.0,
+    morphStimulus = -1.0,
+    RT = -1.0,
+    response =- 1.0,
+    accuracy = -1.0
+    ):
+    self.index = index
+    self.sessionID = sessionID
+    self.categoryID = categoryID
+    self.blockID = blockID
+    self.trial = trial
+    self.exemplars = exemplars
+    self.morphLevel = morphLevel
+    self.morphStimulus = morphStimulus
+    self.RT = RT
+    self.response = response
+    self.accuracy = accuracy
