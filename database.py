@@ -38,11 +38,11 @@ class User(db.Model):
     return unicode(self.id)
 
 
-class RecordsYo(db.Model):
+class RecordsDat(db.Model):
 
   study_ID = 'DAT' # I think, maybe 'meditrain'.
 
-  __tablename__ = 'rec'
+  __tablename__ = 'rec2'
 
   id = db.Column(db.Integer, primary_key=True)
 
@@ -94,7 +94,7 @@ class RecordsMediTrain(db.Model):
 
   study_ID = 'meditrain'
 
-  __tablename__ = 'rec'
+  __tablename__ = 'rec0'
 
   id = db.Column(db.Integer, primary_key=True)
 
@@ -124,7 +124,7 @@ class RecordsTrainCat(db.Model):
 
   study_ID = 'traincat'
 
-  __tablename__ = 'rec'
+  __tablename__ = 'rec1'
 
   id = db.Column(db.Integer, primary_key=True)
 

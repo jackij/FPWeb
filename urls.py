@@ -8,11 +8,12 @@ from pages import (
   main_page,
   )
 from site_css import site_default
-from login_stuff import oidapp, db, RecordsYo, RecordsMediTrain, RecordsTrainCat
+from login_stuff import oidapp
+from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
 
 
 studyID_to_record_class = {
-  'dat': RecordsYo,
+  'dat': RecordsDat,
   'meditrain': RecordsMediTrain,
   }
 

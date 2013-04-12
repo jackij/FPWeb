@@ -9,7 +9,7 @@ from flask.ext.login import (
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.openid import OpenID
 from templates import base
-from database import db, User
+from database import db, User, RecordsDat
 
 
 OPENID_STORE = '/tmp/oid.store'
