@@ -5,7 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-MySQL_CONN = 'mysql+mysqldb://%(db_user)s:%s(db_pw)s@%(db_host)s>/%(db_name)s'
+MySQL_CONN = 'mysql+mysqldb://%(db_user)s:%(db_pw)s@%(db_host)s/%(db_name)s'
 
 
 class User(db.Model):
@@ -136,12 +136,12 @@ class RecordsTrainCat(db.Model):
   categoryID = db.Column(db.Integer())
   blockID = db.Column(db.Integer())
   trial = db.Column(db.Integer())
-  exemplars = db.Column(db.String()) # What is this and why are we saving it like this?
+  exemplars = db.Column(db.String(50)) # What is this and why are we saving it like this?
   morphLevel = db.Column(db.Integer())
-  morphStimulus = db.Column(db.String())
+  morphStimulus = db.Column(db.String(50))
   RT = db.Column(db.Float())
-  response = db.Column(db.String())
-  accuracy = db.Column(db.String())
+  response = db.Column(db.String(50))
+  accuracy = db.Column(db.String(50))
 
   def __init__(self,
     index = -1.0,
