@@ -1,5 +1,14 @@
 from flask.ext.wtf import Form
-from wtforms import DateField, TextField, TextAreaField, RadioField, SelectField, validators, widgets
+from wtforms import (
+  DateField,
+  TextField,
+  TextAreaField,
+  RadioField,
+  SelectField,
+  validators,
+  widgets,
+  HiddenField,
+  )
 from wtforms.widgets.core import html_params
 
 
@@ -7,18 +16,18 @@ dummy_page = 'doobiedoobiedoo.html'
 
 
 def select_multi_checkbox(field, ul_class='', **kwargs):
-    kwargs.setdefault('type', 'checkbox')
-    field_id = kwargs.pop('id', field.id)
-    html = [u'<ul %s>' % html_params(id=field_id, class_=ul_class)]
-    for value, label, checked in field.iter_choices():
-        choice_id = u'%s-%s' % (field_id, value)
-        options = dict(kwargs, name=field.name, value=value, id=choice_id)
-        if checked:
-            options['checked'] = 'checked'
-        html.append(u'<li><input %s /> ' % html_params(**options))
-        html.append(u'<label for="%s">%s</label></li>' % (choice_id, label))
-    html.append(u'</ul>')
-    return u''.join(html)
+  kwargs.setdefault('type', 'checkbox')
+  field_id = kwargs.pop('id', field.id)
+  html = [u'<ul %s>' % html_params(id=field_id, class_=ul_class)]
+  for value, label, checked in field.iter_choices():
+    choice_id = u'%s-%s' % (field_id, value)
+    options = dict(kwargs, name=field.name, value=value, id=choice_id)
+    if checked:
+      options['checked'] = 'checked'
+    html.append(u'<li><input %s /> ' % html_params(**options))
+    html.append(u'<label for="%s">%s</label></li>' % (choice_id, label))
+  html.append(u'</ul>')
+  return u''.join(html)
 
 
 class MyForm(Form):
@@ -47,7 +56,6 @@ class MyForm(Form):
       (3, '6-12 week cognitive training studies (computerized training is done at home)'),
       ],
     widget=select_multi_checkbox,
-#    option_widget=widgets.CheckboxInput,
     )
 ##  Please check ALL that apply
 
@@ -77,7 +85,6 @@ class MyForm(Form):
       (20, 'hearing loss (hearing aids)'),
       ],
     widget=select_multi_checkbox,
-#    option_widget=widgets.CheckboxInput,
     )
 ##  Please check ALL that apply
 
@@ -88,50 +95,34 @@ class MyForm(Form):
     choices = [(0, 'Yes'), (1, 'No')],
     )
   psychiatric_describe = TextAreaField('Please describe')
-
-
-##
-##  learning_disabilities = 'Do you have any learning disabilities?'
-##
-##  medications = 'What medications are you currently taking?'
+  learning_disabilities = TextAreaField('Do you have any learning disabilities?')
+  medications = TextAreaField('What medications are you currently taking?')
 ##    Please include over the counter medications and supplements.
-##
-##
-##  handedness = 'What is your handedness'
-##    right handed
-##    left handed
-##    ambidextrous
-##
-##
-##  school = 'How many years of education have you completed?'
+  handedness = RadioField('What is your handedness', coerce=int, choices=[
+    (0, 'right handed'),
+    (1, 'left handed'),
+    (2, 'ambidextrous'),
+    ])
+  school = TextField('How many years of education have you completed?')
 ##    High School = 12 + 1 for each year of undergraduate or graduate study
-##
-##
-##  alcohol = 'How many alcoholic drinks do you consume on average per week?'
-##
-##  smoke = 'Do you smoke? If so, how often?
-##    No
-##    Daily
-##    a few times per week
-##    a few times per month
-##    a few times per year
-##
-##
-##  exercise = 'How often do you exercise?'
-##    Daily
-##    4-6 times per week
-##    1-3 times per week
-##    a few times a month
-##    rarely/never
-##
-##
-##
-##  type_exercises = 'What type of exercises do you do?'
-##
-##  hours_sleep = 'How many hours of sleep do you typically get each night?'
-##
-##
-##  participant_id type="hidden"
+  alcohol = TextField('How many alcoholic drinks do you consume on average per week?')
+  smoke = RadioField('Do you smoke? If so, how often?', coerce=int, choices=[
+    (0, 'No'),
+    (1, 'Daily'),
+    (2, 'a few times per week'),
+    (3, 'a few times per month'),
+    (4, 'a few times per year'),
+    ])
+  exercise = RadioField('How often do you exercise?', coerce=int, choices=[
+    (0, 'Daily'),
+    (1, '4-6 times per week'),
+    (2, '1-3 times per week'),
+    (3, 'a few times a month'),
+    (4, 'rarely/never'),
+    ])
+  type_exercises = TextField('What type of exercises do you do?')
+  hours_sleep = TextField('How many hours of sleep do you typically get each night?')
+#  participant_id type="hidden"
 
 form = MyForm(csrf_enabled=False)
 
