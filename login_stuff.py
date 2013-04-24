@@ -43,17 +43,15 @@ def foo():
   return str(base(**page))
 
 
-#@oidapp.route("/in", methods=["GET", "POST"])
 @oid.loginhandler
 def login():
-  with oidapp.app_context():
     if request.method == 'GET':
       if current_user.is_anonymous():
-        page_data = request.environ.get('PAGES', [{}])[0]
+        page_data = request.environ.get('PAGE', {})
         page_data['next'] = oid.get_next_url()
         page_data['error'] = oid.fetch_error()
         return str(base(**page_data))
-      return redirect('/log/out')
+      return redirect('/logout')
 
     open_id = request.form.get('openid')
     if open_id:
@@ -69,14 +67,13 @@ def login():
     return redirect('/Bah')
 
 
-#@oidapp.route("/out", methods=["GET", "POST"])
 def logout():
   if not current_user.is_anonymous():
     if request.method == 'GET':
-      page_data = request.environ.get('PAGES', [None, {}])[1]
+      page_data = request.environ.get('PAGE', {})
       return str(base(**page_data))
     logout_user()
-  return redirect('/log/in')
+  return redirect('/login')
 
 
 @oid.after_login
@@ -84,7 +81,7 @@ def after_login(response):
   email_address = response.email
   if not email_address:
     flash('Invalid login. Please try again.')
-    return redirect('/log/in')
+    return redirect('/login')
 
   user = User.query.filter_by(email=email_address).first()
   if not user:

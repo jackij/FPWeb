@@ -9,6 +9,7 @@ from pages import (
   )
 from site_css import site_default
 from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
+from login_stuff import login, logout
 
 
 studyID_to_record_class = {
@@ -18,7 +19,6 @@ studyID_to_record_class = {
 
 
 SITE_CSS_URL = '/static/site.css'
-
 
 
 for page in (home_page, login_page, logout_page, main_page):
@@ -43,15 +43,14 @@ def urls(app):
   post_loader.methods = ['POST']
   app.add_url_rule('/datapost', 'datapost', post_loader)
 
-##  app.add(SITE_CSS_URL, GET=envey(CSS=site_default)(css))
-##
-##  app.add('/m|', GET=envey(PAGE=(main_page))(oidapp))
-
 
 def logins(app):
-  pass
-##  loggy = envey(PAGES=(login_page, logout_page))(oidapp)
-##  app.add('/log|', GET=loggy, POST=loggy)
+  logy = envey(PAGE=login_page)(login)
+  logy.methods = ['GET', 'POST']
+  app.add_url_rule('/login', 'login', logy)
+  logy = envey(PAGE=logout_page)(logout)
+  logy.methods = ['GET', 'POST']
+  app.add_url_rule('/logout', 'logout', logy)
 
 
 everything = [urls, logins]
