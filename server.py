@@ -4,21 +4,22 @@ Generic(-ish) view functions and WSGI apps and things to modify same.
 import json
 from functools import wraps
 from templates import base, I
+from flask import request, Response
 
 
-def lo(environ, start_response):
+def lo():
   '''
   Render a page in environ['PAGE'] using the base template.
   '''
-  start_response('200 OK', [('content-type', 'text/html')])
-  return base(**environ.get('PAGE', {}))
+  PAGE = request.environ.get('PAGE', {})
+  return str(base(**PAGE))
 
 
-def plo(environ, start_response):
+def plo():
   '''
   Render a page in environ['PAGE'] using the base template.
   '''
-  start_response('200 OK', [('content-type', 'text/html')])
+  environ = request.environ
   page = environ.get('PAGE', {})
   postdata = environ.get('wsgi.input')
   if not postdata:
@@ -29,12 +30,16 @@ def plo(environ, start_response):
   return base(**page)
 
 
-def css(environ, start_response):
+def css():
   '''
   Render a page in environ['PAGE'] using the base template.
   '''
-  start_response('200 OK', [('content-type', 'text/css')])
-  return environ.get('CSS', 'NOT REALLY CSS YO!')
+  css = request.environ.get('CSS', 'NOT REALLY CSS YO!')
+  return Response(
+    response=css,
+    status=200,
+    content_type='text/css',
+    )
 
 
 def envey(**kw):
@@ -43,9 +48,9 @@ def envey(**kw):
   '''
   def decorator(view_function):
 #    @wraps(view_function)
-    def a(environ, start_response):
-      environ.update(kw)
-      return view_function(environ, start_response)
+    def a():
+      request.environ.update(kw)
+      return view_function()
     return a
   return decorator
 

@@ -8,7 +8,6 @@ from pages import (
   main_page,
   )
 from site_css import site_default
-from login_stuff import oidapp
 from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
 
 
@@ -19,6 +18,7 @@ studyID_to_record_class = {
 
 
 SITE_CSS_URL = '/static/site.css'
+
 
 
 for page in (home_page, login_page, logout_page, main_page):
@@ -35,17 +35,21 @@ def process_batch(data):
 
 
 def urls(app):
-  app.add('/', GET=envey(PAGE=home_page)(lo))
-  post_loader = postload(JSON_convert_and_process(process_batch))(lo)
-  app.add('/datapost', POST=envey(PAGE=datapost)(post_loader))
-  app.add(SITE_CSS_URL, GET=envey(CSS=site_default)(css))
+  app.add_url_rule(SITE_CSS_URL, 'css', envey(CSS=site_default)(css))
+  app.add_url_rule('/', 'index', (envey(PAGE=home_page)(lo)))
 
-  app.add('/m|', GET=envey(PAGE=(main_page))(oidapp))
+
+##  post_loader = postload(JSON_convert_and_process(process_batch))(lo)
+##  app.add('/datapost', POST=envey(PAGE=datapost)(post_loader))
+##  app.add(SITE_CSS_URL, GET=envey(CSS=site_default)(css))
+##
+##  app.add('/m|', GET=envey(PAGE=(main_page))(oidapp))
 
 
 def logins(app):
-  loggy = envey(PAGES=(login_page, logout_page))(oidapp)
-  app.add('/log|', GET=loggy, POST=loggy)
+  pass
+##  loggy = envey(PAGES=(login_page, logout_page))(oidapp)
+##  app.add('/log|', GET=loggy, POST=loggy)
 
 
 everything = [urls, logins]

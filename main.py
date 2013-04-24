@@ -1,8 +1,18 @@
 import os
-import selector
-import urls
+from flask import Flask
+from database import db
+from login_stuff import login_manager, oid
+from urls import urls
 
 
-app = selector.Selector()
-for url in urls.everything:
-  url(app)
+app = Flask(__name__)
+app.secret_key = "I'm a secret!"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.debug = True
+
+
+db.init_app(app)
+login_manager.setup_app(app)
+oid.init_app(app)
+
+urls(app)

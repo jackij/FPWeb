@@ -15,21 +15,10 @@ from database import db, User, RecordsDat, MySQL_CONN
 OPENID_STORE = '/tmp/oid.store'
 
 
-app = Flask(__name__)
-app.secret_key = "I'm a secret!"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db.init_app(app)
+oid = OpenID(app=None, fs_store_path=OPENID_STORE)
 
 
-oidapp = app # Flask('OID_APP')
-oidapp.debug = True
-oid = OpenID(oidapp, OPENID_STORE)
-
-
-loapp = oidapp # Flask('LOGIN_APP')
 login_manager = LoginManager()
-login_manager.setup_app(loapp)
-
 login_manager.login_view = "login"
 
 
@@ -42,7 +31,7 @@ def load_user(uid):
   return User.query.filter_by(id=uid).first()
 
 
-@oidapp.route("/foo")
+#@oidapp.route("/foo")
 @login_required
 def foo():
   page = request.environ.get('PAGE', {})
@@ -54,7 +43,7 @@ def foo():
   return str(base(**page))
 
 
-@oidapp.route("/in", methods=["GET", "POST"])
+#@oidapp.route("/in", methods=["GET", "POST"])
 @oid.loginhandler
 def login():
   with oidapp.app_context():
@@ -80,7 +69,7 @@ def login():
     return redirect('/Bah')
 
 
-@oidapp.route("/out", methods=["GET", "POST"])
+#@oidapp.route("/out", methods=["GET", "POST"])
 def logout():
   if not current_user.is_anonymous():
     if request.method == 'GET':
