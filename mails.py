@@ -3,7 +3,7 @@ from flask.ext.mail import Mail, Message
 
 
 app = Flask(__name__)
-app.config['MAIL_SERVER'] = 'gazzaleylab.ucsf.edu'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_USERNAME'] = 'test.account'
 app.config['MAIL_PASSWORD'] = open('/home/sforman/GazAd').read().strip()
 

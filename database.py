@@ -167,3 +167,14 @@ class RecordsTrainCat(db.Model):
     self.RT = RT
     self.response = response
     self.accuracy = accuracy
+
+
+class Profile(db.Model):
+
+  __tablename__ = 'profile'
+
+  id = db.Column(db.Integer, primary_key=True)
+  fname = db.Column(db.String(50))
+  lname = db.Column(db.String(50))
+  sex = db.Column(db.Integer())
+
