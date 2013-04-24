@@ -1,4 +1,5 @@
 demodata = {
+'studyID': 'dat',
 "data": [
         { "currentReleaseReactionTimeGoal":0.000000, "targetOnScreenTime":0.200000, "distanceFromProbe":33.376640, "reactionTime":1000.000000, "timeBetweenCueAndTarget":1500.000000, "angleOfXVPlus":0.000000, "timeStamp":1364255616.000000, "releaseReactionTime":413.000000, "sucsess":1.000000, "informationOfTheCue":0.000000, "cueProbeTime":0.500000, "shouldPressProbe":1.000000, "locationOfTargetInDegrees":211.000000},
         { "currentReleaseReactionTimeGoal":0.000000, "targetOnScreenTime":0.200000, "distanceFromProbe":0.000000, "reactionTime":1000.000000, "timeBetweenCueAndTarget":1500.000000, "angleOfXVPlus":0.000000, "timeStamp":1364255616.000000, "releaseReactionTime":413.000000, "sucsess":0.000000, "informationOfTheCue":0.500000, "cueProbeTime":0.500000, "shouldPressProbe":1.000000, "locationOfTargetInDegrees":288.000000},

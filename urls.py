@@ -38,9 +38,11 @@ def urls(app):
   app.add_url_rule(SITE_CSS_URL, 'css', envey(CSS=site_default)(css))
   app.add_url_rule('/', 'index', (envey(PAGE=home_page)(lo)))
 
+  post_loader = postload(JSON_convert_and_process(process_batch))(lo)
+  post_loader = envey(PAGE=datapost)(post_loader)
+  post_loader.methods = ['POST']
+  app.add_url_rule('/datapost', 'datapost', post_loader)
 
-##  post_loader = postload(JSON_convert_and_process(process_batch))(lo)
-##  app.add('/datapost', POST=envey(PAGE=datapost)(post_loader))
 ##  app.add(SITE_CSS_URL, GET=envey(CSS=site_default)(css))
 ##
 ##  app.add('/m|', GET=envey(PAGE=(main_page))(oidapp))
