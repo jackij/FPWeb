@@ -48,9 +48,9 @@ def envey(**kw):
   '''
   def decorator(view_function):
 #    @wraps(view_function)
-    def a():
+    def a(*a, **b):
       request.environ.update(kw)
-      return view_function()
+      return view_function(*a, **b)
     return a
   return decorator
 
@@ -60,7 +60,7 @@ def postload(processor=I, error=lambda: None):
   Load data from POST and process it, sticking the result in environ['POSTDATA'].
   '''
   def decorator(view_function):
-    def inner():
+    def inner(*a, **b):
       page = request.environ.setdefault('PAGE', {})
       postdata = request.environ.get('wsgi.input')
       if not postdata:
@@ -68,7 +68,7 @@ def postload(processor=I, error=lambda: None):
       else:
         pd = postdata.read(int(request.environ.get('CONTENT_LENGTH') or 0))
       page['POSTDATA'] = processor(pd)
-      return view_function()
+      return view_function(*a, **b)
     return inner
   return decorator
 

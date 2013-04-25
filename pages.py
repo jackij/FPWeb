@@ -1,8 +1,6 @@
 '''
 This is where all the specific content for pages should go.
 
-(Notice that this file/module imports nothing?  Is that significant?)
-
 Both html.py patterns and content (text) can be specified here. The urls.txt
 and the pre-made generic structures will compose it properly. (At least
 that's the idea.)
@@ -118,10 +116,10 @@ login_page = dict(
 def main_dash(c, user, db, record_classes, **extra):
   html = c.root
   title_h1 = html.find('h1')
-  title_h1.text = title_h1.text.replace('[User Name]', user.fullname)
+  title_h1.text = title_h1.text.format(UserName=user.fullname)
 
   def r(row, rc, **extra):
-    row.td.a(rc.study_ID, href='#')
+    row.td.a(rc.study_ID, href='/study/' + rc.study_ID)
     row.td(str(rc.query.count()))
 
   tbale(
@@ -132,13 +130,13 @@ def main_dash(c, user, db, record_classes, **extra):
     r,
     )
 
-  tbale(
-    c.div,
-    "Sessions",
-    ('Study Session', 'received on'),
-    record_classes,
-    r,
-    )
+##  tbale(
+##    c.div,
+##    "Sessions",
+##    ('Study Session', 'received on'),
+##    record_classes,
+##    r,
+##    )
 
 
 def tbale(c, title, heads, rows, row_maker, **extra):
@@ -154,10 +152,27 @@ def tbale(c, title, heads, rows, row_maker, **extra):
 
 main_page = dict(
   title = 'Gazzian Main',
-  page_title = 'Hi [User Name]',
+  page_title = 'Hi {UserName}',
   body = body,
   form = main_dash,
-  own_URL = '/m/foo',
+  own_URL = '/dash',
+  crumbs = [
+    ('neuropost', '/'),
+    ('Your Profile','/m/foo' ),
+    ('logout','/logout' ),
+    ],
+  )
+
+
+def study(c, user, db, record_class, **extra):
+  studyID = record_class.study_ID
+
+
+study_page = dict(
+  title = 'Gazzian Study {studyID}',
+  body = body,
+  form = study,
+  own_URL = '/study/',
   crumbs = [
     ('neuropost', '/'),
     ('Your Profile','/m/foo' ),

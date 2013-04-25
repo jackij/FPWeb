@@ -6,17 +6,12 @@ from pages import (
   logout_page,
   datapost,
   main_page,
+  study_page,
   )
 from site_css import site_default
 from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
 from login_stuff import login, logout
-from dash import dash
-
-
-studyID_to_record_class = {
-  'dat': RecordsDat,
-  'meditrain': RecordsMediTrain,
-  }
+from dash import dash, study, studyID_to_record_class
 
 
 SITE_CSS_URL = '/static/site.css'
@@ -45,6 +40,8 @@ def urls(app):
   app.add_url_rule('/datapost', 'datapost', post_loader)
 
   app.add_url_rule('/dash', 'dash', envey(PAGE=main_page)(dash))
+
+  app.add_url_rule('/study/<studyID>', 'study', envey(PAGE=study_page)(study))
 
 
 def logins(app):
