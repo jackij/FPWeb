@@ -9,7 +9,7 @@ from pages import (
   )
 from site_css import site_default
 from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
-from login_stuff import login, logout
+from login_stuff import login, logout, dash
 
 
 studyID_to_record_class = {
@@ -42,6 +42,8 @@ def urls(app):
   post_loader = envey(PAGE=datapost)(post_loader)
   post_loader.methods = ['POST']
   app.add_url_rule('/datapost', 'datapost', post_loader)
+
+  app.add_url_rule('/dash', 'dash', envey(PAGE=main_page)(dash))
 
 
 def logins(app):

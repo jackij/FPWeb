@@ -15,5 +15,6 @@ db.init_app(app)
 login_manager.setup_app(app)
 oid.init_app(app)
 
+
 for urls in everything:
   urls(app)

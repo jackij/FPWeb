@@ -31,9 +31,8 @@ def load_user(uid):
   return User.query.filter_by(id=uid).first()
 
 
-#@oidapp.route("/foo")
 @login_required
-def foo():
+def dash():
   page = request.environ.get('PAGE', {})
   page['user'] = current_user
   page['db'] = db
