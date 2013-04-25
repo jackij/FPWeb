@@ -31,17 +31,6 @@ def load_user(uid):
   return User.query.filter_by(id=uid).first()
 
 
-@login_required
-def dash():
-  page = request.environ.get('PAGE', {})
-  page['user'] = current_user
-  page['db'] = db
-  page['record_classes'] = [
-    RecordsDat,
-    ]
-  return str(base(**page))
-
-
 @oid.loginhandler
 def login():
     if request.method == 'GET':

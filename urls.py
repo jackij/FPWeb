@@ -9,7 +9,8 @@ from pages import (
   )
 from site_css import site_default
 from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
-from login_stuff import login, logout, dash
+from login_stuff import login, logout
+from dash import dash
 
 
 studyID_to_record_class = {
