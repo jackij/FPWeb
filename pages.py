@@ -122,7 +122,7 @@ def main_dash(c, user, db, record_classes, **extra):
     row.td.a(rc.study_ID, href='/study/' + rc.study_ID)
     row.td(str(rc.query.count()))
 
-  tbale(
+  do_table(
     c.div,
     "Studies",
     ('Study', 'Total Records'),
@@ -130,7 +130,7 @@ def main_dash(c, user, db, record_classes, **extra):
     r,
     )
 
-##  tbale(
+##  do_table(
 ##    c.div,
 ##    "Sessions",
 ##    ('Study Session', 'received on'),
@@ -139,7 +139,7 @@ def main_dash(c, user, db, record_classes, **extra):
 ##    )
 
 
-def tbale(c, title, heads, rows, row_maker, **extra):
+def do_table(c, title, heads, rows, row_maker, **extra):
   c.h3(title)
   with c.table(border='1') as t:
     with t.thead.tr as head:
@@ -164,8 +164,23 @@ main_page = dict(
   )
 
 
+from datetime import datetime
+datetime.utcfromtimestamp
+
 def study(c, user, db, record_class, **extra):
   studyID = record_class.study_ID
+
+  def r(row, record, **extra):
+    t = datetime.utcfromtimestamp(record.timeStamp)
+    row.td(t.isoformat(' '))
+
+  do_table(
+    c.div,
+    "Records",
+    ('Timestamp', 'Faa', 'Laa', 'La'),
+    record_class.query.all(),
+    r,
+    )
 
 
 study_page = dict(
@@ -175,7 +190,6 @@ study_page = dict(
   own_URL = '/study/',
   crumbs = [
     ('neuropost', '/'),
-    ('Your Profile','/m/foo' ),
     ('logout','/logout' ),
     ],
   )

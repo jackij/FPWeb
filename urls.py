@@ -17,7 +17,7 @@ from dash import dash, study, studyID_to_record_class
 SITE_CSS_URL = '/static/site.css'
 
 
-for page in (home_page, login_page, logout_page, main_page):
+for page in (home_page, login_page, logout_page, main_page, study_page):
   page.setdefault('stylesheets', []).append(SITE_CSS_URL)
 
 

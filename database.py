@@ -154,7 +154,7 @@ class RecordsTrainCat(db.Model):
     morphStimulus = -1.0,
     RT = -1.0,
     response =- 1.0,
-    accuracy = -1.0
+    accuracy = -1.0,
     ):
     self.index = index
     self.sessionID = sessionID
@@ -200,3 +200,56 @@ class Profile(db.Model):
   type_exercises = db.Column(db.String(100))
   hours_sleep = db.Column(db.String(50))
   
+  def __init__(self,
+    fname = -1.0,
+    lname = -1.0,
+    sex = -1.0,
+    birthdate = -1.0,
+    subject_id = -1.0,
+    phone = -1.0,
+    email = -1.0,
+    language = -1.0,
+    language_additional = -1.0,
+    meditation = -1.0,
+    meditation_description = -1.0,
+    other_studies = -1.0,
+    history = -1.0,
+    history_explanation = -1.0,
+    psychiatric = -1.0,
+    psychiatric_describe = -1.0,
+    learning_disabilities = -1.0,
+    medications = -1.0,
+    handedness = -1.0,
+    school = -1.0,
+    alcohol = -1.0,
+    smoke = -1.0,
+    exercise = -1.0,
+    type_exercises = -1.0,
+    hours_sleep = -1.0,
+    ):
+    self.fname = fname
+    self.lname = lname
+    self.sex = sex
+    self.birthdate = birthdate
+    self.subject_id = subject_id
+    self.phone = phone
+    self.email = email
+    self.language = language
+    self.language_additional = language_additional
+    self.meditation = meditation
+    self.meditation_description = meditation_description
+    self.other_studies = other_studies
+    self.history = history
+    self.history_explanation = history_explanation
+    self.psychiatric = psychiatric
+    self.psychiatric_describe = psychiatric_describe
+    self.learning_disabilities = learning_disabilities
+    self.medications = medications
+    self.handedness = handedness
+    self.school = school
+    self.alcohol = alcohol
+    self.smoke = smoke
+    self.exercise = exercise
+    self.type_exercises = type_exercises
+    self.hours_sleep = hours_sleep
+
