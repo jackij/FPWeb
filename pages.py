@@ -86,6 +86,7 @@ logout_page = dict(
   own_URL = '/logout',
   crumbs = [
     ('neuropost', '/'),
+    ('profile', '/profile'),
     ('logout','/logout' ),
     ],
 )
@@ -130,7 +131,7 @@ main_page = dict(
   own_URL = '/dash',
   crumbs = [
     ('neuropost', '/'),
-    ('Your Profile','/m/foo' ),
+    ('profile', '/profile'),
     ('logout','/logout' ),
     ],
   )
@@ -159,6 +160,7 @@ study_page = dict(
   own_URL = '/study/',
   crumbs = [
     ('neuropost', '/'),
+    ('profile', '/profile'),
     ('logout','/logout' ),
     ],
   )
