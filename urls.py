@@ -7,17 +7,19 @@ from pages import (
   datapost,
   main_page,
   study_page,
+  profile_page,
   )
 from site_css import site_default
 from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
 from login_stuff import login, logout
-from dash import dash, study, studyID_to_record_class
+from dash import dash, study, studyID_to_record_class, profile
 
 
 SITE_CSS_URL = '/static/site.css'
 
 
-for page in (home_page, login_page, logout_page, main_page, study_page):
+for page in (home_page, login_page, logout_page, main_page, study_page,
+             profile_page):
   page.setdefault('stylesheets', []).append(SITE_CSS_URL)
 
 
@@ -42,6 +44,7 @@ def urls(app):
   app.add_url_rule('/dash', 'dash', envey(PAGE=main_page)(dash))
 
   app.add_url_rule('/study/<studyID>', 'study', envey(PAGE=study_page)(study))
+  app.add_url_rule('/profile', 'profile', envey(PAGE=profile_page)(profile))
 
 
 def logins(app):

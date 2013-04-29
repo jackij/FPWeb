@@ -5,6 +5,13 @@ Both html.py patterns and content (text) can be specified here. The urls.txt
 and the pre-made generic structures will compose it properly. (At least
 that's the idea.)
 '''
+from datetime import datetime
+from forms import login_form, logout_form, profile_form
+
+
+pform_string, pform = profile_form()
+pform_string = pform_string.getvalue()
+
 
 #: I'm using this content distribution network.
 CDN = 'http://cdnjs.cloudflare.com/ajax/libs/'
@@ -23,6 +30,17 @@ def body(body, title, page_title, form, crumbs, **extra):
       if i < n:
         d += ' - '
   form(body, **extra)
+
+
+def do_table(c, title, heads, rows, row_maker, **extra):
+  c.h3(title)
+  with c.table(border='1') as t:
+    with t.thead.tr as head:
+      for h in heads:
+        head.th(h)
+    for row_data in rows:
+      with t.tr as row:
+        row_maker(row, row_data, **extra)
 
 
 def dp_html(c, subtitle, POSTDATA, **extra):
@@ -60,13 +78,6 @@ home_page = dict(
   )
 
 
-def logout_form(c, own_URL, **extra):
-  with c.div(class_='container').form as f:
-    f(action=own_URL, method='POST')
-    f.input(value='Logout', type_='submit')
-    return f
-
-
 logout_page = dict(
   title = 'Gazzian Logout',
   page_title = 'Logout',
@@ -78,26 +89,6 @@ logout_page = dict(
     ('logout','/logout' ),
     ],
 )
-
-
-def login_form(c, own_URL, **extra):
-  with c.form as f:
-
-    f(action=own_URL, method='POST')
-
-    with f.div(class_='container') as d:
-      d.h3('Login with your username')
-      d.input(id_='user', name='user', type_='text')
-      d.input(id_='pasw', name='pasw', type_='password')
-      d.input(value='Login', type_='submit')
-
-    with f.div(class_='container') as d:
-      d.h3('Login with OpenID')
-      d += 'OpenID: '
-      d.input(name='openid', type_='text', size='30')
-      d.input(value='Sign in', type_='submit')
-
-    return f
 
 
 login_page = dict(
@@ -130,25 +121,6 @@ def main_dash(c, user, db, record_classes, **extra):
     r,
     )
 
-##  do_table(
-##    c.div,
-##    "Sessions",
-##    ('Study Session', 'received on'),
-##    record_classes,
-##    r,
-##    )
-
-
-def do_table(c, title, heads, rows, row_maker, **extra):
-  c.h3(title)
-  with c.table(border='1') as t:
-    with t.thead.tr as head:
-      for h in heads:
-        head.th(h)
-    for row_data in rows:
-      with t.tr as row:
-        row_maker(row, row_data, **extra)
-
 
 main_page = dict(
   title = 'Gazzian Main',
@@ -163,9 +135,6 @@ main_page = dict(
     ],
   )
 
-
-from datetime import datetime
-datetime.utcfromtimestamp
 
 def study(c, user, db, record_class, **extra):
   studyID = record_class.study_ID
@@ -194,6 +163,23 @@ study_page = dict(
     ],
   )
 
+
+def profile(c, user, db, **extra):
+  c.form('{form_content}', action='/profile', method='POST')
+
+
+profile_page = dict(
+  title = 'Profile',
+  page_title = 'Profile',
+  body = body,
+  form = profile,
+  form_content=pform_string,
+  own_URL = '/profile',
+  crumbs = [
+    ('neuropost', '/'),
+    ('logout','/logout' ),
+    ],
+  )
 
 
 

@@ -73,15 +73,16 @@ def after_login(response):
 
   user = User.query.filter_by(email=email_address).first()
   if not user:
-      nickname = response.nickname or email_address.split('@', 1)[0]
-      user = User(
-        name=nickname,
-        fullname=response.fullname,
-        email=email_address,
-        password="",
-        )
-      db.session.add(user)
-      db.session.commit()
+    nickname = response.nickname or email_address.split('@', 1)[0]
+    user = User(
+      name=nickname,
+      fullname=response.fullname,
+      email=email_address,
+      password="",
+      )
+    db.session.add(user)
+    db.session.commit()
+    return redirect('/new_profile')
 
   login_user(user)
   return redirect(oid.get_next_url() or '/')

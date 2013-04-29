@@ -41,3 +41,13 @@ def study(studyID):
   page['title'] = page['page_title'] = \
     page['title'].format(studyID=rc.study_ID)
   return str(base(**page))
+
+
+@login_required
+def profile():
+  page = request.environ.get('PAGE', {})
+  page['user'] = current_user
+  page['db'] = db
+  html = str(base(**page))
+  html = html.format(form_content=page['form_content'])
+  return html

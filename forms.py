@@ -1,3 +1,4 @@
+from StringIO import StringIO
 from flask.ext.wtf import Form
 from wtforms import (
   DateField,
@@ -12,7 +13,31 @@ from wtforms import (
 from wtforms.widgets.core import html_params
 
 
-dummy_page = 'doobiedoobiedoo.html'
+def login_form(c, own_URL, **extra):
+  with c.form as f:
+
+    f(action=own_URL, method='POST')
+
+    with f.div(class_='container') as d:
+      d.h3('Login with your username')
+      d.input(id_='user', name='user', type_='text')
+      d.input(id_='pasw', name='pasw', type_='password')
+      d.input(value='Login', type_='submit')
+
+    with f.div(class_='container') as d:
+      d.h3('Login with OpenID')
+      d += 'OpenID: '
+      d.input(name='openid', type_='text', size='30')
+      d.input(value='Sign in', type_='submit')
+
+    return f
+
+
+def logout_form(c, own_URL, **extra):
+  with c.div(class_='container').form as f:
+    f(action=own_URL, method='POST')
+    f.input(value='Logout', type_='submit')
+    return f
 
 
 def select_multi_checkbox(field, ul_class='', **kwargs):
@@ -30,7 +55,7 @@ def select_multi_checkbox(field, ul_class='', **kwargs):
   return u''.join(html)
 
 
-class MyForm(Form):
+class ProfileForm(Form):
   fname = TextField('First Name:', [validators.required()])
   lname = TextField('Last Name:', [validators.required()])
   sex = RadioField('Sex', coerce=int, choices=[
@@ -124,10 +149,21 @@ class MyForm(Form):
   hours_sleep = TextField('How many hours of sleep do you typically get each night?')
 #  participant_id type="hidden"
 
-form = MyForm(csrf_enabled=False)
 
-with open(dummy_page, 'w') as f:
+def profile_form(f=None, csrf_enabled=False, **kw):
+  if f is None:
+    f = StringIO()
+  form = ProfileForm(csrf_enabled=csrf_enabled, **kw)
   for field in form:
     print >> f, field.label
     print >> f, field
     print >> f, '<br>'
+  return f, form
+  
+
+
+if __name__ == '__main__':
+  dummy_page = 'doobiedoobiedoo.html'
+  open(dummy_page, 'w')
+
+
