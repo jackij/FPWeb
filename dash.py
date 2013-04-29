@@ -7,6 +7,7 @@ from database import (
   RecordsMediTrain,
   RecordsTrainCat,
   )
+from forms import ProfileForm
 
 
 studyID_to_record_class = {
@@ -48,6 +49,16 @@ def profile():
   page = request.environ.get('PAGE', {})
   page['user'] = current_user
   page['db'] = db
+  form_content = page['form_content']
+
+  if request.method == 'POST':
+    form = ProfileForm()
+    if form.validate_on_submit():
+      print 'Whooo!!'
+    else:
+      print 'Booo!!'
+    form_content = str(form)
+
   html = str(base(**page))
   html = html.format(form_content=page['form_content'])
   return html

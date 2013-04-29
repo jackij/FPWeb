@@ -162,8 +162,8 @@ def profile_form(f=None, csrf_enabled=False, **kw):
   
 
 
-if __name__ == '__main__':
-  dummy_page = 'doobiedoobiedoo.html'
-  open(dummy_page, 'w')
+##if __name__ == '__main__':
+##  dummy_page = 'doobiedoobiedoo.html'
+##  open(dummy_page, 'w')
 
 

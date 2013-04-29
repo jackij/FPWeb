@@ -44,7 +44,10 @@ def urls(app):
   app.add_url_rule('/dash', 'dash', envey(PAGE=main_page)(dash))
 
   app.add_url_rule('/study/<studyID>', 'study', envey(PAGE=study_page)(study))
-  app.add_url_rule('/profile', 'profile', envey(PAGE=profile_page)(profile))
+
+  pro = envey(PAGE=profile_page)(profile)
+  pro.methods = ['GET', 'POST']
+  app.add_url_rule('/profile', 'profile', pro)
 
 
 def logins(app):

@@ -72,6 +72,7 @@ home_page = dict(
   form = home_html,
   crumbs = [
     ('neuropost', '/'),
+    ('profile', '/profile'),
     ('login','/login' ),
     ('logout','/logout' ),
     ],
@@ -167,7 +168,8 @@ study_page = dict(
 
 
 def profile(c, user, db, **extra):
-  c.form('{form_content}', action='/profile', method='POST')
+  f = c.form('{form_content}', action='/profile', method='POST')
+  f.input(value='Create | Update', type_='submit')
 
 
 profile_page = dict(
@@ -182,13 +184,6 @@ profile_page = dict(
     ('logout','/logout' ),
     ],
   )
-
-
-
-
-
-
-
 
 
 
