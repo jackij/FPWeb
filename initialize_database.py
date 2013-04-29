@@ -1,5 +1,6 @@
 import sys
-from login_stuff import app, db, User
+from main import app
+from login_stuff import db, User
 
 app.test_request_context().push()
 
