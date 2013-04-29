@@ -82,9 +82,11 @@ def after_login(response):
       )
     db.session.add(user)
     db.session.commit()
-    return redirect('/new_profile')
+    redirect_to = '/profile'
+  else:
+    redirect_to = '/dash'
 
   login_user(user)
-  return redirect(oid.get_next_url() or '/')
+  return redirect(redirect_to)
 
 

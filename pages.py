@@ -13,10 +13,6 @@ pform_string, pform = profile_form()
 pform_string = pform_string.getvalue()
 
 
-#: I'm using this content distribution network.
-CDN = 'http://cdnjs.cloudflare.com/ajax/libs/'
-
-
 def body(body, title, page_title, form, crumbs, **extra):
   '''
   A simple body renderer.
@@ -184,34 +180,3 @@ profile_page = dict(
     ('logout','/logout' ),
     ],
   )
-
-
-
-
-
-##page = dict(
-##
-##  scripts = [CDN + js_lib for js_lib in (
-##    'd3/3.0.1/d3.v3.min.js',
-##    'underscore.js/1.4.3/underscore-min.js',
-##    'jquery/1.8.3/jquery.min.js',
-##    'jqueryui/1.9.2/jquery-ui.min.js',
-##    )],
-##
-##  stylesheets = ('http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css',),
-##
-##  body = xerblin_body,
-##
-##  # The stuff above is used by base() template function, while this stuff
-##  # is passed into the body (i.e. xerblin_body above.)
-##  title = 'Xerblin',
-##  subtitle = 'a Human-Computer Interface',
-##  UL = my_ul,
-##  things = {
-##    'stack': 'a place to put objects for user manipulation. This is similar to a Clipboard but it can hold more than one item at a time. Commands operate on the items on the Stack.',
-##    'dictionary': 'a place to keep commands. Any command that is inscribed in the Dictionary can be run from the user interface.',
-##    'interpreter': 'a very simple command interpreter that takes care of running commands with the Stack. ',
-##    },
-##
-##)
-
