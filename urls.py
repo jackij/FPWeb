@@ -10,7 +10,13 @@ from pages import (
   profile_page,
   )
 from site_css import site_default
-from database import db, RecordsDat, RecordsMediTrain, RecordsTrainCat
+from database import (
+  db,
+  RecordAny,
+  RecordsDat,
+  RecordsMediTrain,
+  RecordsTrainCat,
+  )
 from login_stuff import login, logout
 from dash import dash, study, studyID_to_record_class, profile
 
@@ -26,8 +32,8 @@ for page in (home_page, login_page, logout_page, main_page, study_page,
 def process_batch(data):
   record_class = studyID_to_record_class.get(data['studyID'].lower())
   if record_class is None:
-    print repr(data)
-    return repr(data)
+    def record_class(st=data['testStudyID'], si=data['subjectID'], **e):
+      return RecordAny(studyID=st, subjectID=si, raw_data=repr(e))
   for record in data['data']:
     record = record_class(**record)
     db.session.add(record)

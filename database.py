@@ -41,9 +41,17 @@ class User(db.Model):
     return unicode(self.id)
 
 
+class RecordAny(db.Model):
+  __tablename__ = 'polymorph'
+  id = db.Column(db.Integer, primary_key=True)
+  studyID = db.Column(db.String(50))
+  subjectID = db.Column(db.String(50))
+  raw_data = db.Column(db.String(1000))
+
+
 class RecordsDat(db.Model):
 
-  study_ID = 'DAT' # I think, maybe 'meditrain'.
+  study_ID = 'DAT'
 
   __tablename__ = 'rec2'
 
