@@ -5,7 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-MySQL_CONN = 'mysql+mysqldb://%(db_user)s:%(db_pw)s@%(db_host)s/%(db_name)s'
+MYSQL_CONN = 'mysql+mysqldb://%(db_user)s:%(db_pw)s@%(db_host)s/%(db_name)s'
 
 
 class User(db.Model):
