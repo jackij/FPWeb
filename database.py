@@ -1,5 +1,6 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from itertools import groupby
 
 
 db = SQLAlchemy()
@@ -47,6 +48,15 @@ class RecordAny(db.Model):
   studyID = db.Column(db.String(50))
   subjectID = db.Column(db.String(50))
   raw_data = db.Column(db.String(1000))
+
+  _studyID_attrgetter = lambda ra: ra.studyID
+
+  @classmethod
+  def by_studyID(class_):
+    s = class_.query.all()
+    s.sort(key=class_._studyID_attrgetter)
+    for stid_group in groupby(s, class_._studyID_attrgetter):
+      yield stid_group
 
 
 class RecordsDat(db.Model):

@@ -102,7 +102,7 @@ login_page = dict(
   )
 
 
-def main_dash(c, user, db, record_classes, **extra):
+def main_dash(c, user, db, record_classes, ra, **extra):
   html = c.root
   title_h1 = html.find('h1')
   title_h1.text = title_h1.text.format(UserName=user.fullname)
@@ -116,6 +116,18 @@ def main_dash(c, user, db, record_classes, **extra):
     "Studies",
     ('Study', 'Total Records'),
     record_classes,
+    r,
+    )
+
+  def r(row, (stid, records), **extra):
+    row.td.a(stid, href='/study/' + stid)
+    row.td(str(len(list(records))))
+
+  do_table(
+    c.div,
+    'Additional Studies',
+    ('Study', 'Total Records'),
+    ra.by_studyID(),
     r,
     )
 

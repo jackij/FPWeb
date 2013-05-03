@@ -6,6 +6,7 @@ from database import (
   RecordsDat,
   RecordsMediTrain,
   RecordsTrainCat,
+  RecordAny,
   )
 from forms import ProfileForm
 
@@ -26,6 +27,7 @@ def dash():
     RecordsMediTrain,
     RecordsTrainCat,
     ]
+  page['ra'] = RecordAny
   return str(base(**page))
 
 
