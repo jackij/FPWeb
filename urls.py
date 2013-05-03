@@ -30,10 +30,15 @@ for page in (home_page, login_page, logout_page, main_page, study_page,
 
 
 def process_batch(data):
-  record_class = studyID_to_record_class.get(data['studyID'].lower())
+  studyID = data['studyID']
+  record_class = studyID_to_record_class.get(studyID.lower())
   if record_class is None:
-    def record_class(st=data['testStudyID'], si=data['subjectID'], **e):
-      return RecordAny(studyID=st, subjectID=si, raw_data=repr(e))
+    def record_class(subjectID=data['subjectID'], **e):
+      return RecordAny(
+        studyID=studyID,
+        subjectID=subjectID,
+        raw_data=repr(e),
+        )
   for record in data['data']:
     record = record_class(**record)
     db.session.add(record)
