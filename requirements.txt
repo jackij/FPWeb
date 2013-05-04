@@ -1,5 +1,4 @@
 Basket==1.0
-html==1.16
 logic==0.1.8
 python-omega==0.1
 resolver==0.2.1
