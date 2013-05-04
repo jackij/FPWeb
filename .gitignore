@@ -39,3 +39,5 @@ virt-env/
 *.html
 twistd.log
 twistd.pid
+sooper_sekrit.py
+virtualenv-1.9.1/
