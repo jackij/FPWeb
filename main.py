@@ -12,8 +12,8 @@ TESTING = True
 
 app = Flask(__name__)
 app.secret_key = sekrit
-app.config['SQLALCHEMY_DATABASE_URI'] = MYSQL_CONN % MYSQL_CONN_INFO
-# 'sqlite:////tmp/test.db' if TESTING else
+#app.config['SQLALCHEMY_DATABASE_URI'] = MYSQL_CONN % MYSQL_CONN_INFO
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.debug = TESTING
 
 

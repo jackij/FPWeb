@@ -1,4 +1,6 @@
-virtualenv virt-env
+export V=virtualenv-1.9.1
+tar xzf ./$V.tar.gz
+python ./$V/virtualenv.py virt-env
 source ./virt-env/bin/activate
 
 export BASKET_ROOT=`pwd`/basket
