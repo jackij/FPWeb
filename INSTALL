@@ -8,3 +8,15 @@ export LOCAL_PIP="pip install --no-index -f file://$BASKET_ROOT"
 
 $LOCAL_PIP Basket
 basket list | cut -f 1 -d " " | xargs $LOCAL_PIP
+
+
+
+# In the mods-enabled (mods-available) directory we put in the wsgi.conf file:
+#     WSGIPythonPath  /var/www/secure/neuropost
+#
+# In the sites-enabled (sites-available) directory we put in the 001-default-ssl config file:
+#
+#     WSGIScriptAlias /neuropost /var/www/secure/neuropost/neuropost.wsgi
+#
+# copy neuropost.wsgi to to directory above and edit it to be sure the virtual environment
+# is correctly specified.
