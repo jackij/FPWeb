@@ -9,6 +9,9 @@ from datetime import datetime
 from forms import login_form, logout_form, profile_form
 
 
+SITE_BASE = '/neuropost'
+
+
 pform_string, pform = profile_form()
 pform_string = pform_string.getvalue()
 
@@ -22,7 +25,7 @@ def body(body, title, page_title, form, crumbs, **extra):
     d(class_='crumbs')
     n = len(crumbs) - 1
     for i, (name, URL) in enumerate(crumbs):
-      a = d.a(name, href=URL)
+      a = d.a(name, href=SITE_BASE + URL)
       if i < n:
         d += ' - '
   form(body, **extra)
