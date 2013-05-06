@@ -9,7 +9,7 @@ from datetime import datetime
 from forms import login_form, logout_form, profile_form
 
 
-SITE_BASE = '/neuropost'
+SITE_BASE = '' # '/neuropost'
 
 
 pform_string, pform = profile_form()
