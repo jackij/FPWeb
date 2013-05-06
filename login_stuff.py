@@ -1,7 +1,6 @@
-from flask import Flask, render_template, Response, request, redirect
+from flask import Flask, render_template, Response, request, redirect, abort
 from flask.ext.login import (
   LoginManager,
-  login_required,
   login_user,
   current_user,
   logout_user,
@@ -20,6 +19,16 @@ oid = OpenID(app=None, fs_store_path=OPENID_STORE)
 
 login_manager = LoginManager()
 login_manager.login_view = "login"
+
+
+def require_role(role, error_response=lambda: abort(401)):
+  def wrapper(f):
+    def wrapped(*args, **kwargs):
+      if current_user.is_authenticated() and current_user.role == role:
+        return f(*args, **kwargs)
+      return error_response()
+    return wrapped
+  return wrapper
 
 
 @login_manager.user_loader

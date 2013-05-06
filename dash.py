@@ -8,6 +8,7 @@ from database import (
   RecordsTrainCat,
   RecordAny,
   )
+from login_stuff import require_role
 from forms import ProfileForm
 
 
@@ -18,6 +19,7 @@ studyID_to_record_class = {
 
 
 @login_required
+@require_role('admin')
 def dash():
   page = request.environ.get('PAGE', {})
   page['user'] = current_user

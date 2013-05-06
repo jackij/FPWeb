@@ -18,12 +18,14 @@ class User(db.Model):
   fullname = db.Column(db.String(50))
   email = db.Column(db.String(50))
   password = db.Column(db.String(12))
+  role = db.Column(db.String(50))
 
   def __init__(self, name, fullname, email, password):
     self.name = name
     self.fullname = fullname
     self.email = email
     self.password = password
+    self.role = 'subject'
 
   def __repr__(self):
     return "<User('%s','%s', '%s')>" % (self.name, self.fullname, self.email)
