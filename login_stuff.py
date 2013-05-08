@@ -12,8 +12,8 @@ from database import db, User, RecordsDat
 
 
 OPENID_STORE = '/tmp/oid.store'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
 
 
 oid = OpenID(app=None, fs_store_path=OPENID_STORE)
@@ -44,26 +44,27 @@ def load_user(uid):
 
 @oid.loginhandler
 def login():
-    if request.method == 'GET':
-      if current_user.is_anonymous():
-        page_data = request.environ.get('PAGE', {})
-        page_data['next'] = oid.get_next_url()
-        page_data['error'] = oid.fetch_error()
-        return str(base(**page_data))
-      return redirect(LOGOUT_URL)
+  pre = request.environ.get('SCRIPT_NAME', '')
+  if request.method == 'GET':
+    if current_user.is_anonymous():
+      page_data = request.environ.get('PAGE', {})
+      page_data['next'] = oid.get_next_url()
+      page_data['error'] = oid.fetch_error()
+      return str(base(**page_data))
+    return redirect(pre + LOGOUT_URL)
 
-    open_id = request.form.get('openid')
-    if open_id:
-      return oid.try_login(open_id, ask_for=['email', 'fullname', 'nickname'])
+  open_id = request.form.get('openid')
+  if open_id:
+    return oid.try_login(open_id, ask_for=['email', 'fullname', 'nickname'])
 
-    username = request.form['user']
-    pw = request.form['pasw']
-    user = User.query.filter_by(name=username, password=pw).first()
+  username = request.form['user']
+  pw = request.form['pasw']
+  user = User.query.filter_by(name=username, password=pw).first()
 
-    if user:
-      login_user(user)
-      return redirect(oid.get_next_url() or '/')
-    return redirect('Bah')
+  if user:
+    login_user(user)
+    return redirect(oid.get_next_url() or pre)
+  return redirect('Bah')
 
 
 def logout():
@@ -72,15 +73,16 @@ def logout():
       page_data = request.environ.get('PAGE', {})
       return str(base(**page_data))
     logout_user()
-  return redirect(LOGIN_URL)
+  return redirect(request.environ.get('SCRIPT_NAME', '') + LOGIN_URL)
 
 
 @oid.after_login
 def after_login(response):
+  pre = request.environ.get('SCRIPT_NAME', '')
   email_address = response.email
   if not email_address:
     flash('Invalid login. Please try again.')
-    return redirect(LOGIN_URL)
+    return redirect(pre + LOGIN_URL)
 
   user = User.query.filter_by(email=email_address).first()
   if not user:
@@ -93,11 +95,11 @@ def after_login(response):
       )
     db.session.add(user)
     db.session.commit()
-    redirect_to = 'profile'
+    redirect_to = '/profile'
   else:
-    redirect_to = 'dash'
+    redirect_to = '/dash'
 
   login_user(user)
-  return redirect(redirect_to)
+  return redirect(pre + redirect_to)
 
 

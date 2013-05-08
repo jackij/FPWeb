@@ -21,7 +21,7 @@ from login_stuff import login, logout
 from dash import dash, study, studyID_to_record_class, profile
 
 
-SITE_CSS_URL = '/static/site.css'
+SITE_CSS_URL = 'static/site.css'
 
 
 for page in (home_page, login_page, logout_page, main_page, study_page,
@@ -47,7 +47,7 @@ def process_batch(data):
 
 
 def urls(app):
-  app.add_url_rule(SITE_CSS_URL, 'css', envey(CSS=site_default)(css))
+  app.add_url_rule('/' + SITE_CSS_URL, 'css', envey(CSS=site_default)(css))
   app.add_url_rule('/', 'index', (envey(PAGE=home_page)(lo)))
 
   post_loader = postload(JSON_convert_and_process(process_batch))(lo)

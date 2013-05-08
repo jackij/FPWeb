@@ -6,6 +6,7 @@ and the pre-made generic structures will compose it properly. (At least
 that's the idea.)
 '''
 from datetime import datetime
+from flask import request
 from forms import login_form, logout_form, profile_form
 
 
@@ -17,12 +18,15 @@ def body(body, title, page_title, form, crumbs, **extra):
   '''
   A simple body renderer.
   '''
+  pre = request.environ.get('SCRIPT_NAME', '')
+  if 'own_URL' in extra:
+    extra['own_URL'] = pre + extra['own_URL']
   body.h1(page_title)
   with body.div as d:
     d(class_='crumbs')
     n = len(crumbs) - 1
     for i, (name, URL) in enumerate(crumbs):
-      a = d.a(name, href=URL)
+      a = d.a(name, href=pre + URL)
       if i < n:
         d += ' - '
   form(body, **extra)
@@ -68,9 +72,9 @@ home_page = dict(
   form = home_html,
   crumbs = [
     ('neuropost', '/'),
-    ('profile', 'profile'),
-    ('login','login' ),
-    ('logout','logout' ),
+    ('profile', '/profile'),
+    ('login','/login' ),
+    ('logout','/logout' ),
     ],
   )
 
@@ -80,11 +84,11 @@ logout_page = dict(
   page_title = 'Logout',
   body = body,
   form = logout_form,
-  own_URL = 'logout',
+  own_URL = '/logout',
   crumbs = [
     ('neuropost', '/'),
-    ('profile', 'profile'),
-    ('logout','logout' ),
+    ('profile', '/profile'),
+    ('logout','/logout' ),
     ],
 )
 
@@ -97,7 +101,7 @@ login_page = dict(
   own_URL = '/login',
   crumbs = [
     ('neuropost', '/'),
-    ('login','login' ),
+    ('login','/login' ),
     ],
   )
 
@@ -140,8 +144,8 @@ main_page = dict(
   own_URL = '/dash',
   crumbs = [
     ('neuropost', '/'),
-    ('profile', 'profile'),
-    ('logout','logout' ),
+    ('profile', '/profile'),
+    ('logout','/logout' ),
     ],
   )
 
@@ -169,14 +173,14 @@ study_page = dict(
   own_URL = '/study/',
   crumbs = [
     ('neuropost', '/'),
-    ('profile', 'profile'),
-    ('logout','logout' ),
+    ('profile', '/profile'),
+    ('logout','/logout' ),
     ],
   )
 
 
-def profile(c, user, db, **extra):
-  f = c.form('{form_content}', action='profile', method='POST')
+def profile(c, user, db, own_URL, **extra):
+  f = c.form('{form_content}', action=own_URL, method='POST')
   f.input(value='Create | Update', type_='submit')
 
 
@@ -189,6 +193,6 @@ profile_page = dict(
   own_URL = '/profile',
   crumbs = [
     ('neuropost', '/'),
-    ('logout','logout' ),
+    ('logout','/logout' ),
     ],
   )
