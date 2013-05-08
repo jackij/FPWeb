@@ -9,9 +9,6 @@ from datetime import datetime
 from forms import login_form, logout_form, profile_form
 
 
-SITE_BASE = '' # '/neuropost'
-
-
 pform_string, pform = profile_form()
 pform_string = pform_string.getvalue()
 
@@ -25,7 +22,7 @@ def body(body, title, page_title, form, crumbs, **extra):
     d(class_='crumbs')
     n = len(crumbs) - 1
     for i, (name, URL) in enumerate(crumbs):
-      a = d.a(name, href=SITE_BASE + URL)
+      a = d.a(name, href=URL)
       if i < n:
         d += ' - '
   form(body, **extra)
@@ -71,9 +68,9 @@ home_page = dict(
   form = home_html,
   crumbs = [
     ('neuropost', '/'),
-    ('profile', '/profile'),
-    ('login','/login' ),
-    ('logout','/logout' ),
+    ('profile', 'profile'),
+    ('login','login' ),
+    ('logout','logout' ),
     ],
   )
 
@@ -83,11 +80,11 @@ logout_page = dict(
   page_title = 'Logout',
   body = body,
   form = logout_form,
-  own_URL = '/logout',
+  own_URL = 'logout',
   crumbs = [
     ('neuropost', '/'),
-    ('profile', '/profile'),
-    ('logout','/logout' ),
+    ('profile', 'profile'),
+    ('logout','logout' ),
     ],
 )
 
@@ -100,7 +97,7 @@ login_page = dict(
   own_URL = '/login',
   crumbs = [
     ('neuropost', '/'),
-    ('login','/login' ),
+    ('login','login' ),
     ],
   )
 
@@ -111,7 +108,7 @@ def main_dash(c, user, db, record_classes, ra, **extra):
   title_h1.text = title_h1.text.format(UserName=user.fullname)
 
   def r(row, rc, **extra):
-    row.td.a(rc.study_ID, href='/study/' + rc.study_ID)
+    row.td.a(rc.study_ID, href='study/' + rc.study_ID)
     row.td(str(rc.query.count()))
 
   do_table(
@@ -123,7 +120,7 @@ def main_dash(c, user, db, record_classes, ra, **extra):
     )
 
   def r(row, (stid, records), **extra):
-    row.td.a(stid, href='/study/' + stid)
+    row.td.a(stid, href='study/' + stid)
     row.td(str(len(list(records))))
 
   do_table(
@@ -143,8 +140,8 @@ main_page = dict(
   own_URL = '/dash',
   crumbs = [
     ('neuropost', '/'),
-    ('profile', '/profile'),
-    ('logout','/logout' ),
+    ('profile', 'profile'),
+    ('logout','logout' ),
     ],
   )
 
@@ -172,14 +169,14 @@ study_page = dict(
   own_URL = '/study/',
   crumbs = [
     ('neuropost', '/'),
-    ('profile', '/profile'),
-    ('logout','/logout' ),
+    ('profile', 'profile'),
+    ('logout','logout' ),
     ],
   )
 
 
 def profile(c, user, db, **extra):
-  f = c.form('{form_content}', action='/profile', method='POST')
+  f = c.form('{form_content}', action='profile', method='POST')
   f.input(value='Create | Update', type_='submit')
 
 
@@ -192,6 +189,6 @@ profile_page = dict(
   own_URL = '/profile',
   crumbs = [
     ('neuropost', '/'),
-    ('logout','/logout' ),
+    ('logout','logout' ),
     ],
   )

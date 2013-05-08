@@ -7,14 +7,13 @@ from flask.ext.login import (
   )
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.openid import OpenID
-from pages import SITE_BASE
 from templates import base
 from database import db, User, RecordsDat
 
 
 OPENID_STORE = '/tmp/oid.store'
-LOGIN_URL = SITE_BASE + '/login'
-LOGOUT_URL = SITE_BASE + '/logout'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 
 
 oid = OpenID(app=None, fs_store_path=OPENID_STORE)
@@ -64,7 +63,7 @@ def login():
     if user:
       login_user(user)
       return redirect(oid.get_next_url() or '/')
-    return redirect(SITE_BASE + '/Bah')
+    return redirect('Bah')
 
 
 def logout():
@@ -94,9 +93,9 @@ def after_login(response):
       )
     db.session.add(user)
     db.session.commit()
-    redirect_to = SITE_BASE + '/profile'
+    redirect_to = 'profile'
   else:
-    redirect_to = SITE_BASE + '/dash'
+    redirect_to = 'dash'
 
   login_user(user)
   return redirect(redirect_to)
