@@ -18,8 +18,8 @@ LOGOUT_URL = '/logout'
 OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
     {'name': 'Yahoo', 'url': 'https://me.yahoo.com'},
-    {'name': 'AOL', 'url': 'http://openid.aol.com/<username>'},
-    {'name': 'Flickr', 'url': 'http://www.flickr.com/<username>'},
+    {'name': 'AOL', 'url': 'http://openid.aol.com/[username]'},
+    {'name': 'Flickr', 'url': 'http://www.flickr.com/[username]'},
     {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'},
     ]
 
@@ -106,7 +106,7 @@ def after_login(response):
     db.session.commit()
     redirect_to = '/profile'
   else:
-    redirect_to = '/dash'
+    redirect_to = '/dash' if user.role == 'admin' else '/profile'
 
   login_user(user)
   return redirect(pre + redirect_to)

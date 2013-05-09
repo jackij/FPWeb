@@ -72,6 +72,7 @@ home_page = dict(
   form = home_html,
   crumbs = [
     ('neuropost', '/'),
+    ('dash', '/dash'),
     ('profile', '/profile'),
     ('login','/login' ),
     ('logout','/logout' ),
@@ -87,6 +88,7 @@ logout_page = dict(
   own_URL = '/logout',
   crumbs = [
     ('neuropost', '/'),
+    ('dash', '/dash'),
     ('profile', '/profile'),
     ('logout','/logout' ),
     ],
@@ -144,6 +146,7 @@ main_page = dict(
   own_URL = '/dash',
   crumbs = [
     ('neuropost', '/'),
+    ('dash', '/dash'),
     ('profile', '/profile'),
     ('logout','/logout' ),
     ],
@@ -173,6 +176,7 @@ study_page = dict(
   own_URL = '/study/',
   crumbs = [
     ('neuropost', '/'),
+    ('dash', '/dash'),
     ('profile', '/profile'),
     ('logout','/logout' ),
     ],
@@ -193,6 +197,7 @@ profile_page = dict(
   own_URL = '/profile',
   crumbs = [
     ('neuropost', '/'),
+    ('dash', '/dash'),
     ('logout','/logout' ),
     ],
   )
