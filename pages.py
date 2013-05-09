@@ -112,7 +112,7 @@ def main_dash(c, user, db, record_classes, ra, **extra):
   title_h1.text = title_h1.text.format(UserName=user.fullname)
 
   def r(row, rc, **extra):
-    row.td.a(rc.study_ID, href='study/' + rc.study_ID)
+    row.td.a(rc.study_ID, href='study/' + rc.study_ID) # TODO fix the SCCRIPT_thingy....
     row.td(str(rc.query.count()))
 
   do_table(

@@ -15,6 +15,14 @@ OPENID_STORE = '/tmp/oid.store'
 LOGIN_URL = '/login'
 LOGOUT_URL = '/logout'
 
+OPENID_PROVIDERS = [
+    {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
+    {'name': 'Yahoo', 'url': 'https://me.yahoo.com'},
+    {'name': 'AOL', 'url': 'http://openid.aol.com/<username>'},
+    {'name': 'Flickr', 'url': 'http://www.flickr.com/<username>'},
+    {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'},
+    ]
+
 
 oid = OpenID(app=None, fs_store_path=OPENID_STORE)
 
@@ -50,6 +58,7 @@ def login():
       page_data = request.environ.get('PAGE', {})
       page_data['next'] = oid.get_next_url()
       page_data['error'] = oid.fetch_error()
+      page_data['OPENID_PROVIDERS'] = OPENID_PROVIDERS
       return str(base(**page_data))
     return redirect(pre + LOGOUT_URL)
 

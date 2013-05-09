@@ -13,7 +13,20 @@ from wtforms import (
 from wtforms.widgets.core import html_params
 
 
-def login_form(c, own_URL, **extra):
+def login_form(c, own_URL, OPENID_PROVIDERS, **extra):
+  c.script('''
+function set_openid(openid, pr)
+{
+    u = openid.search('<username>');
+    if (u != -1) {
+        // openid requires username
+        user = prompt('Enter your ' + pr + ' username:');
+        openid = openid.substr(0, u) + user;
+    }
+    form = document.forms['login'];
+    form.elements['openid'].value = openid;
+}
+''', type_="text/javascript")
   with c.form as f:
 
     f(action=own_URL, method='POST')
@@ -26,6 +39,12 @@ def login_form(c, own_URL, **extra):
 
     with f.div(class_='container') as d:
       d.h3('Login with OpenID')
+      prov = d.div
+      for provider in OPENID_PROVIDERS:
+        prov.a(
+          provider['name'],
+          href="javascript:set_openid('%(url)s', '%(name)s');" % provider,
+          )
       d += 'OpenID: '
       d.input(name='openid', type_='text', size='30')
       d.input(value='Sign in', type_='submit')
