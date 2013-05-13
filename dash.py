@@ -6,6 +6,12 @@ from database import (
   RecordsDat,
   RecordsMediTrain,
   RecordsTrainCat,
+  RecordsMediTrainPre,
+  RecordsMediTrainPost,
+  RecordsMediTrainSleep,
+  RecordsMediTrainSaliva,
+  RecordsDATPre,
+  RecordsDATPost,
   RecordAny,
   )
 from login_stuff import require_role
@@ -15,6 +21,13 @@ from forms import ProfileForm
 studyID_to_record_class = {
   'dat': RecordsDat,
   'meditrain': RecordsMediTrain,
+  'traincat':RecordsTrainCat,
+  'datpre':RecordsDATPre,
+  'datpost':RecordsDATPost,
+  'meditrainpre':RecordsMediTrainPre,
+  'meditrainpost':RecordsMediTrainPost,
+  'meditrainsaliva':RecordsMediTrainSaliva,
+  'meditrainsleep':RecordsMediTrainSleep,
   }
 
 
@@ -28,6 +41,12 @@ def dash():
     RecordsDat,
     RecordsMediTrain,
     RecordsTrainCat,
+    RecordsDatPre,
+    RecordsDatPost,
+    RecordsMediTrainPre,
+    RecordsMediTrainPost,
+    RecordsMediTrainSleep,
+    RecordsMediTrainSaliva,
     ]
   page['ra'] = RecordAny
   return str(base(**page))
