@@ -1,6 +1,8 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from itertools import groupby
+import logging
+log = logging.getLogger('db')
 
 
 db = SQLAlchemy()
@@ -21,6 +23,7 @@ class User(db.Model):
   role = db.Column(db.String(50))
 
   def __init__(self, name, fullname, email, password):
+    log.debug('Creating user %s %s, %s', name, fullname, email)
     self.name = name
     self.fullname = fullname
     self.email = email
@@ -28,7 +31,7 @@ class User(db.Model):
     self.role = 'subject'
 
   def __repr__(self):
-    return "<User('%s','%s', '%s')>" % (self.name, self.fullname, self.email)
+    return "<User(%r, %r, %r)>" % (self.name, self.fullname, self.email)
 
   def is_authenticated(self):
     return True
@@ -98,6 +101,7 @@ class RecordsDat(db.Model):
     timeBetweenCueAndTarget=-1.0,
     timeStamp=-1.0,
     ):
+    log.debug('Creating DAT record')
     self.angleOfXVPlus = angleOfXVPlus
     self.cueProbeTime = cueProbeTime
     self.currentReleaseReactionTimeGoal = currentReleaseReactionTimeGoal
@@ -134,6 +138,7 @@ class RecordsMediTrain(db.Model):
     trialCount=-1.0,
     duration=-1.0,
     ):
+    log.debug('Creating MediTrain record, date: %r', date)
     self.date = date
     self.response = response
     self.sessionCount = sessionCount
@@ -176,6 +181,7 @@ class RecordsTrainCat(db.Model):
     response =- 1.0,
     accuracy = -1.0,
     ):
+    log.debug('Creating TrainCat record, sessionID: %r', sessionID)
     self.index = index
     self.sessionID = sessionID
     self.categoryID = categoryID

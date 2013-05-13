@@ -19,6 +19,7 @@ from database import (
   )
 from login_stuff import login, logout
 from dash import dash, study, studyID_to_record_class, profile
+import logging
 
 
 SITE_CSS_URL = 'static/site.css'
@@ -29,17 +30,29 @@ for page in (home_page, login_page, logout_page, main_page, study_page,
   page.setdefault('stylesheets', []).append(SITE_CSS_URL)
 
 
+log = logging.getLogger('process_batch')
+
+
 def process_batch(data):
+  log.debug('processing data: %r', data)
   studyID = data['studyID']
   record_class = studyID_to_record_class.get(studyID.lower())
   if record_class is None:
     def record_class(subjectID=data['subjectID'], **e):
+      log.debug(
+        'Creating Polymorph %r for subject: %r record: %r',
+        studyID,
+        subjectID,
+        e,
+        )
       return RecordAny(
         studyID=studyID,
         subjectID=subjectID,
         raw_data=repr(e),
         )
+  log.debug('Using record class: %r', record_class)
   for record in data['data']:
+    log.debug('\tprocessing record: %r', record)
     record = record_class(**record)
     db.session.add(record)
   db.session.commit()

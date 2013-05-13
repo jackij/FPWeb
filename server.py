@@ -12,7 +12,6 @@ def lo():
   Render a page in environ['PAGE'] using the base template.
   '''
   PAGE = request.environ.get('PAGE', {})
-  print '!!!', request.environ.get('SCRIPT_NAME', 'SCRIPT_NAME')
   return str(base(**PAGE))
 
 
