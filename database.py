@@ -195,6 +195,210 @@ class RecordsTrainCat(db.Model):
     self.accuracy = accuracy
 
 
+
+class RecordsMediTrainPre(db.Model):
+
+  study_ID = 'MediTrainPre'
+
+  __tablename__ = 'rec3'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  #MediTrainPre_answerNames={
+  #'How noisy is your environment right now?':environmentalNoise',
+  #'How awake/alert are you right now, on a scale of 1-4?':'alertness',
+  #'Have you consumed any caffeine in the last hour?':'caffeineHour'}
+
+
+  environmentalNoise = db.Column(db.String(50))
+  alertness = db.Column(db.String(50))
+  caffeineHour = db.Column(db.String(50))
+  timeStamp = db.Column(db.Float())
+
+  def __init__(self,
+    environmentalNoise=-1.0,
+    alertness=-1.0,
+    caffeineHour=-1.0,
+    timeStamp=-1.0,
+    ):
+    self.environmentalNoise = environmentalNoise
+    self.alertness = alertness
+    self.caffeineHour = caffieneHour
+    self.timeStamp = timeStamp
+
+
+class RecordsMediTrainPost(db.Model):
+
+  study_ID = 'MediTrainPost'
+
+  __tablename__ = 'rec4'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  postTrainingLevel = db.Column(db.String(50))
+  timeStamp = db.Column(db.Float())
+
+  def __init__(self,
+    postTrainingLevel=-1.0,
+    timeStamp=-1.0,
+    ):
+    self.postTrainingLevel = postTrainingLevel
+    self.timeStamp = timeStamp
+
+
+
+class RecordsMediTrainSleep(db.Model):
+
+  study_ID = 'MediTrainSleep'
+
+  __tablename__ = 'rec5'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  #MediTrainSleep_answerNames={
+  #'What time did you go to bed last night?':'bedTime',
+  #'About how long did it take you to fall asleep last night?':'SOL',
+  #'How many times did you wake up last night?':'nightWakes',
+  #'What time did you get out of bed this morning?':'wakeTime',
+  #'Approximately how many hours were you asleep last night?':'hoursAsleep',
+  #'How well do you feel you slept last night, on a scale of 1-7?':'sleepQuality'
+  #}
+
+  bedTime = db.Column(db.String(50))
+  SOL=db.Column(db.String(50))
+  nightWakes=db.Column(db.String(50))
+  wakeTime=db.Column(db.String(50))
+  hoursAsleep=db.Column(db.String(50))
+  sleepQuality=db.Column(db.String(50))
+  timeStamp = db.Column(db.Float())
+
+  def __init__(self,
+    bedTime=-1.0,
+    SOL=-1.0,
+    nightWakes=-1.0,
+    wakeTime=-1.0,
+    hoursAsleep=-1.0,
+    sleepQuality=-1.0,
+    timeStamp=-1.0,
+    ):
+    self.bedTime = bedTime
+    self.SOL=SOL
+    self.nightWakes=nightWakes
+    self.wakeTime=wakeTime
+    self.hoursAsleep=hoursAsleep
+    self.sleepQuality=sleepQuality
+    self.timeStamp = timeStamp
+
+class RecordsMediTrainSaliva(db.Model):
+
+  study_ID = 'MediTrainSaliva'
+
+  __tablename__ = 'rec6'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  #'Which saliva sample are you taking?'=salivaSample
+
+  salivaSample = db.Column(db.String(50))
+  timeStamp = db.Column(db.Float())
+
+  def __init__(self,
+    salivaSample=-1.0,
+    timeStamp=-1.0,
+    ):
+    self.salivaSample = salivaSample
+    self.timeStamp = timeStamp
+
+
+
+class RecordsDATPre(db.Model):
+
+  study_ID = 'DATPre'
+
+  __tablename__ = 'rec7'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  #'Did anything good or bad happen today yet?'=whatHappened
+  #'How are you feeling today, on a scale from 0-5?'=feelingToday
+  #'What time did you wake up this morning?'=morningWakeTime
+  #'How many hours of sleep did you get last night?'=hoursSleep
+  #'How long did it take you to fall asleep last night, from getting into bed to actually falling asleep?'=sleepOnsetHours
+  #'On a scale from 1-10, how "hyper" or "energetic" are you feeling today so far?'=energetic
+  #'Have you had coffee yet today?'=coffeeYet
+  #'How many days a week do you drink coffee in a normal week?'=coffeeDaysPerWeek
+
+
+  whatHappened = db.Column(db.String(50))
+  feelingToday=db.Column(db.String(50))
+  morningWakeTime=db.Column(db.String(50))
+  hoursSleep=db.Column(db.String(50))
+  sleepOnsetHours=db.Column(db.String(50))
+  energetic=db.Column(db.String(50))
+  coffeeYet=db.Column(db.String(50))
+  coffeeDaysPerWeek=db.Column(db.String(50))
+  timeStamp = db.Column(db.Float())
+
+  def __init__(self,
+    whatHappened=-1.0,
+    feelingToday=-1.0,
+    morningWakeTime=-1.0,
+    hoursSleep=-1.0,
+    sleepOnsetHours=-1.0,
+    energetic=-1.0,
+    coffeeYet=-1.0,
+    coffeeDaysPerWeek=-1.0,
+    timeStamp=-1.0,
+    ):
+    self.whatHappened = whatHappened
+    self.feelingToday=feelingToday
+    self.morningWakeTime=morningWakeTime
+    self.hoursSleep=hoursSleep
+    self.sleepOnsetHours=sleepOnsetHours
+    self.energetic=energetic
+    self.coffeeYet=coffeeYet
+    self.coffeeDaysPerWeek=coffeeDaysPerWeek
+    self.timeStamp = timeStamp
+
+
+class RecordsDATPost(db.Model):
+
+  study_ID = 'DATPost'
+
+  __tablename__ = 'rec8'
+
+  id = db.Column(db.Integer, primary_key=True)
+
+  #'What level did you get to?'=levelDATPost
+  #'How enjoyable was this training session, on a scale of 1-5?'=enjoyableTraining
+  #'How distracted were you during this training session, on a scale of 1-5?'=distractedTraining
+  #'In what position were you playing the game?'=gamePosition
+  #'Was the iPad:'=iPadPosition
+
+  levelDATPost = db.Column(db.String(50))
+  enjoyableTraining=db.Column(db.String(50))
+  distractedTraining=db.Column(db.String(50))
+  gamePosition=db.Column(db.String(50))
+  iPadPosition=db.Column(db.String(50))
+  timeStamp = db.Column(db.Float())
+
+  def __init__(self,
+    levelDATPost=-1.0,
+    enjoyableTraining=-1.0,
+    distractedTraining=-1.0,
+    gamePosition=-1.0,
+    iPadPosition=-1.0,
+    timeStamp=-1.0,
+    ):
+    self.levelDATPost = levelDATPost
+    self.enjoyableTraining=enjoyableTraining
+    self.distractedTraining=distractedTraining
+    self.gamePosition=gamePosition
+    self.iPadPosition=iPadPosition
+    self.timeStamp = timeStamp
+
+
+
 class Profile(db.Model):
 
   __tablename__ = 'profile'
@@ -225,7 +429,7 @@ class Profile(db.Model):
   exercise = db.Column(db.Integer())
   type_exercises = db.Column(db.String(100))
   hours_sleep = db.Column(db.String(50))
-  
+
   def __init__(self,
     fname = -1.0,
     lname = -1.0,
