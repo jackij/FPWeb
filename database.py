@@ -202,6 +202,12 @@ class RecordsMediTrainPre(db.Model):
 
   __tablename__ = 'rec3'
 
+  field_map = {
+    'Have you consumed any caffeine in the last hour?': 'caffeineHour',
+    'How awake/alert are you right now, on a scale of 1-4?': 'alertness',
+    'How noisy is your environment right now?': 'environmentalNoise',
+    }
+
   id = db.Column(db.Integer, primary_key=True)
 
   #MediTrainPre_answerNames={
@@ -209,18 +215,20 @@ class RecordsMediTrainPre(db.Model):
   #'How awake/alert are you right now, on a scale of 1-4?':'alertness',
   #'Have you consumed any caffeine in the last hour?':'caffeineHour'}
 
-
+  subjectID = db.Column(db.String(50))
   environmentalNoise = db.Column(db.String(50))
   alertness = db.Column(db.String(50))
   caffeineHour = db.Column(db.String(50))
   timeStamp = db.Column(db.Float())
 
   def __init__(self,
+    subjectID=-1.0,
     environmentalNoise=-1.0,
     alertness=-1.0,
     caffeineHour=-1.0,
     timeStamp=-1.0,
     ):
+    self.subjectID = subjectID
     self.environmentalNoise = environmentalNoise
     self.alertness = alertness
     self.caffeineHour = caffieneHour
@@ -233,18 +241,22 @@ class RecordsMediTrainPost(db.Model):
 
   __tablename__ = 'rec4'
 
+  field_map = {'How do you feel about your training session today?': 'postTrainingLevel'}
+
   id = db.Column(db.Integer, primary_key=True)
 
+  subjectID = db.Column(db.String(50))
   postTrainingLevel = db.Column(db.String(50))
   timeStamp = db.Column(db.Float())
 
   def __init__(self,
+    subjectID=-1.0,
     postTrainingLevel=-1.0,
     timeStamp=-1.0,
     ):
+    self.subjectID = subjectID
     self.postTrainingLevel = postTrainingLevel
     self.timeStamp = timeStamp
-
 
 
 class RecordsMediTrainSleep(db.Model):
@@ -252,6 +264,15 @@ class RecordsMediTrainSleep(db.Model):
   study_ID = 'MediTrainSleep'
 
   __tablename__ = 'rec5'
+
+  field_map = {
+    'About how long did it take you to fall asleep last night?': 'SOL',
+    'Approximately how many hours were you asleep last night?': 'hoursAsleep',
+    'How many times did you wake up last night?': 'nightWakes',
+    'How well do you feel you slept last night, on a scale of 1-7?': 'sleepQuality',
+    'What time did you get out of bed this morning?': 'wakeTime',
+    'What time did you go to bed last night?': 'bedTime',
+    }
 
   id = db.Column(db.Integer, primary_key=True)
 
@@ -264,6 +285,7 @@ class RecordsMediTrainSleep(db.Model):
   #'How well do you feel you slept last night, on a scale of 1-7?':'sleepQuality'
   #}
 
+  subjectID = db.Column(db.String(50))
   bedTime = db.Column(db.String(50))
   SOL=db.Column(db.String(50))
   nightWakes=db.Column(db.String(50))
@@ -273,6 +295,7 @@ class RecordsMediTrainSleep(db.Model):
   timeStamp = db.Column(db.Float())
 
   def __init__(self,
+    subjectID=-1.0,
     bedTime=-1.0,
     SOL=-1.0,
     nightWakes=-1.0,
@@ -281,6 +304,7 @@ class RecordsMediTrainSleep(db.Model):
     sleepQuality=-1.0,
     timeStamp=-1.0,
     ):
+    self.subjectID = subjectID
     self.bedTime = bedTime
     self.SOL=SOL
     self.nightWakes=nightWakes
@@ -297,15 +321,20 @@ class RecordsMediTrainSaliva(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
 
+  field_map = {'Which saliva sample are you taking?': 'salivaSample'}
+
   #'Which saliva sample are you taking?'=salivaSample
 
+  subjectID = db.Column(db.String(50))
   salivaSample = db.Column(db.String(50))
   timeStamp = db.Column(db.Float())
 
   def __init__(self,
+    subjectID=-1.0,
     salivaSample=-1.0,
     timeStamp=-1.0,
     ):
+    self.subjectID = subjectID
     self.salivaSample = salivaSample
     self.timeStamp = timeStamp
 
@@ -316,6 +345,17 @@ class RecordsDATPre(db.Model):
   study_ID = 'DATPre'
 
   __tablename__ = 'rec7'
+
+  field_map = {
+    'Did anything good or bad happen today yet?': 'whatHappened',
+    'Have you had coffee yet today?': 'coffeeYet',
+    'How are you feeling today, on a scale from 0-5?': 'feelingToday',
+    'How long did it take you to fall asleep last night, from getting into bed to actually falling asleep?': 'sleepOnsetHours',
+    'How many days a week do you drink coffee in a normal week?': 'coffeeDaysPerWeek',
+    'How many hours of sleep did you get last night?': 'hoursSleep',
+    'On a scale from 1-10, how "hyper" or "energetic" are you feeling today so far?': 'energetic',
+    'What time did you wake up this morning?': 'morningWakeTime',
+    }
 
   id = db.Column(db.Integer, primary_key=True)
 
@@ -328,7 +368,7 @@ class RecordsDATPre(db.Model):
   #'Have you had coffee yet today?'=coffeeYet
   #'How many days a week do you drink coffee in a normal week?'=coffeeDaysPerWeek
 
-
+  subjectID = db.Column(db.String(50))
   whatHappened = db.Column(db.String(50))
   feelingToday=db.Column(db.String(50))
   morningWakeTime=db.Column(db.String(50))
@@ -340,6 +380,7 @@ class RecordsDATPre(db.Model):
   timeStamp = db.Column(db.Float())
 
   def __init__(self,
+    subjectID=-1.0,
     whatHappened=-1.0,
     feelingToday=-1.0,
     morningWakeTime=-1.0,
@@ -350,6 +391,7 @@ class RecordsDATPre(db.Model):
     coffeeDaysPerWeek=-1.0,
     timeStamp=-1.0,
     ):
+    self.subjectID = subjectID
     self.whatHappened = whatHappened
     self.feelingToday=feelingToday
     self.morningWakeTime=morningWakeTime
@@ -367,6 +409,14 @@ class RecordsDATPost(db.Model):
 
   __tablename__ = 'rec8'
 
+  field_map = {
+    'Did anything good or bad happen today yet?': 'whatHappened',
+    'How are you feeling today, on a scale from 0-5?': 'feelingToday',
+    'How long did it take you to fall asleep last night, from getting into bed to actually falling asleep?': 'sleepOnsetHours',
+    'How many hours of sleep did you get last night?': 'hoursSleep',
+    'What time did you wake up this morning?': 'morningWakeTime',
+    }
+
   id = db.Column(db.Integer, primary_key=True)
 
   #'What level did you get to?'=levelDATPost
@@ -375,6 +425,7 @@ class RecordsDATPost(db.Model):
   #'In what position were you playing the game?'=gamePosition
   #'Was the iPad:'=iPadPosition
 
+  subjectID = db.Column(db.String(50))
   levelDATPost = db.Column(db.String(50))
   enjoyableTraining=db.Column(db.String(50))
   distractedTraining=db.Column(db.String(50))
@@ -383,6 +434,7 @@ class RecordsDATPost(db.Model):
   timeStamp = db.Column(db.Float())
 
   def __init__(self,
+    subjectID=-1.0,
     levelDATPost=-1.0,
     enjoyableTraining=-1.0,
     distractedTraining=-1.0,
@@ -390,6 +442,7 @@ class RecordsDATPost(db.Model):
     iPadPosition=-1.0,
     timeStamp=-1.0,
     ):
+    self.subjectID = subjectID
     self.levelDATPost = levelDATPost
     self.enjoyableTraining=enjoyableTraining
     self.distractedTraining=distractedTraining

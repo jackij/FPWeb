@@ -36,9 +36,10 @@ log = logging.getLogger('process_batch')
 def process_batch(data):
   log.debug('processing data: %r', data)
   studyID = data['studyID']
+  subjectID = data['subjectID']
   record_class = studyID_to_record_class.get(studyID.lower())
   if record_class is None:
-    def record_class(subjectID=data['subjectID'], **e):
+    def record_class(**e):
       log.debug(
         'Creating Polymorph %r for subject: %r record: %r',
         studyID,
@@ -52,8 +53,15 @@ def process_batch(data):
         )
   log.debug('Using record class: %r', record_class)
   for record in data['data']:
-    log.debug('\tprocessing record: %r', record)
-    record = record_class(**record)
+    if hasattr(record_class, 'field_map'):
+      log.debug('\tprocessing record with field_map: %r', record)
+      f = record_class.field_map.get
+      d = {f(k, k): v for k, v in record}
+      d['subjectID'] = data['subjectID']
+      record = record_class(**d)
+    else:
+      log.debug('\tprocessing record: %r', record)
+      record = record_class(**record)
     db.session.add(record)
   db.session.commit()
   return repr(data)
