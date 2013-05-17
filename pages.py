@@ -61,18 +61,14 @@ datapost = dict(
 def home_html(c, subtitle, **extra):
   c.h3(subtitle)
   with c.div(class_='container') as d:
-    d('''Welcome to the Gazzian NeuroPost Center!  
-    
-    Please begin by logging in.  If you do not have an assigned username and password,/
-    you may log in with your Google, Yahoo, AOL, Flickr, or MyOpenID account.  /
-    Simply click on the account provider (ie: Google) that you would like to use,/
-    and follow the instructions to Sign in./
-    
-    Creating a user profile will allow us to gather your contact and background information,/
-    which we can use to let you know about Gazzian research studies in which you might be interested./
-    You can also update this later, in case your contact or background information changes.
-    
-    
+    d('''Welcome to the Gazzian NeuroPost Center!\n\n\    
+    Please begin by logging in.  If you do not have an assigned username and password,\
+    you may log in with your Google, Yahoo, AOL, Flickr, or MyOpenID account.\ 
+    Simply click on the account provider (ie: Google) that you would like to use,\
+    and follow the instructions to Sign in.\n\n\
+    Creating a user profile will allow us to gather your contact and background information,\
+    which we can use to let you know about Gazzian research studies in which you might be interested.\
+    You can also update this later, in case your contact or background information changes.\n\n\
     FOR RESEARCHERS: Select the 'dash' module to access study data.''')
     
 
@@ -138,8 +134,8 @@ def main_dash(c, user, db, record_classes, ra, **extra):
     )
 
   def r(row, (stid, records), **extra):
-    row.td.a(stid, href='study/' + stid)
-    row.td(str(len(list(records))))
+    row.td.a(stid, ='study/' + stid)
+    row.td(str(len(list(rechrefords))))
 
   do_table(
     c.div,
@@ -167,10 +163,12 @@ main_page = dict(
 
 def study(c, user, db, record_class, **extra):
   studyID = record_class.study_ID
+  subjectID = record_class.subject_ID
 
   def r(row, record, **extra):
     #t = datetime.utcfromtimestamp(record.timeStamp)
-    t = datetime.fromtimestamp(record.timeStamp) #replaces UTC with local time    
+    t = datetime.fromtimestamp(record.timeStamp) #replaces UTC with local time 
+    row.td.a(rc.subject_ID, href='subjectID/' + rc.subject_ID) 
     row.td(t.isoformat(' '))
 
   do_table(
@@ -178,7 +176,7 @@ def study(c, user, db, record_class, **extra):
     "Records",
     #Headers should be defined by record_class (ie: studyID-specific)
     #Would like to have Headers here for *all* fields in that rec
-    ('Timestamp', 'SubjectID', 'Laa', 'La'), #new column headers added
+    ('SubjectID', 'timeStamp', 'Laa', 'La'), #new column headers added
     record_class.query.all(),
     r,
     )
